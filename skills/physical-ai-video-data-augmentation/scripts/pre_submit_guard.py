@@ -13,7 +13,6 @@ from __future__ import annotations
 
 import argparse
 import subprocess
-import sys
 from pathlib import Path
 from typing import Any
 
@@ -238,12 +237,12 @@ def main() -> int:
     has_cosmos_cache = any("/models/cosmos_transfer" in url for url in cache_urls)
     has_al_cache = any("/models/auto_labeling" in url for url in cache_urls)
     if has_aug and not has_cosmos_cache:
-        _emit_cache_blocker(
+        _emit_cache_default_action(
             "Augmentation tasks are present but no cosmos cache URL is wired in task inputs."
         )
         return 1
     if has_pl and not has_al_cache:
-        _emit_cache_blocker(
+        _emit_cache_default_action(
             "Auto-labeling tasks are present but no auto_labeling cache URL is wired in task inputs."
         )
         return 1
