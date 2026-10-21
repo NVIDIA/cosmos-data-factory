@@ -14,7 +14,7 @@ want to transform raw videos into augmented clips plus structured labels
 (detections, tracks, captions, event metadata, and MCQs) without wiring the
 full stack manually.
 
-The workflow is driven through the in-repo skill under `skills/physical-ai-video-data-augmentation/` and supports both quick demo runs and production runs against your own datasets.
+The workflow is driven through the `physical-ai-video-data-augmentation` skill, available under `skills/` at tag `paidf-26.10`, and supports both quick demo runs and production runs against your own datasets.
 
 ## Before You Run
 

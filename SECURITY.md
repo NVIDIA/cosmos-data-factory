@@ -26,9 +26,8 @@ PSIRT will acknowledge receipt and coordinate disclosure with the maintainers of
 
 This policy covers:
 
-- The skills published under `skills/` in this repository.
-- The scripts and tooling under `scripts/`, `internal/`, and the workflow assets under `refs/`.
-- Documentation under `docs/` where security-relevant guidance is provided.
+- The deprecated OSMO-orchestrated skills preserved at tag `paidf-26.10`.
+- Documentation in this repository where security-relevant guidance is provided.
 
 It does not cover third-party software, container images, or services referenced by these skills. Vulnerabilities in those should be reported to their respective maintainers; please still notify PSIRT if the issue is exploitable through this project's skills.
 
