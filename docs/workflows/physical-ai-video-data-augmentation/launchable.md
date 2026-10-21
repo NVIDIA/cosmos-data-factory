@@ -1,3 +1,5 @@
+> This provisions the OSMO-orchestrated release under the former PAIDF naming, snapshotted at tag `paidf-26.10`. It works as documented. For the current version of this blueprint, see [the CDF Orchestration docs](https://github.com/NVIDIA/cdf-orchestration/blob/main/docs/video-data-augmentation/getting-started.md). For help migrating, see [MIGRATION.md](../../../MIGRATION.md).
+
 # Physical AI Video Data Augmentation
 
 Provision an environment with the following resource requirements:

@@ -7,7 +7,7 @@ SPDX-License-Identifier: CC-BY-4.0 AND Apache-2.0
 
 ## Reporting a Vulnerability
 
-NVIDIA is committed to addressing security issues in this project responsibly. If you believe you have found a security vulnerability in **Physical AI Data Factory** or in any skill published from this repository, please report it to the NVIDIA Product Security Incident Response Team (PSIRT) rather than opening a public issue or pull request.
+NVIDIA is committed to addressing security issues in this project responsibly. If you believe you have found a security vulnerability in **Cosmos Data Factory** or in any skill published from this repository, please report it to the NVIDIA Product Security Incident Response Team (PSIRT) rather than opening a public issue or merge request.
 
 - **Email:** [psirt@nvidia.com](mailto:psirt@nvidia.com)
 - **Web:** [https://www.nvidia.com/en-us/security/](https://www.nvidia.com/en-us/security/)

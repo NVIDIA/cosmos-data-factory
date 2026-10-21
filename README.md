@@ -3,86 +3,130 @@ SPDX-FileCopyrightText: Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All 
 SPDX-License-Identifier: CC-BY-4.0 AND Apache-2.0
 -->
 
-# Physical AI Data Factory
+# Cosmos Data Factory
 
-Physical AI Data Factory (PAIDF) provides repeatable, scalable, agent-driven
-workflows for curating, enriching, labeling, augmenting, and generating
-physical AI data across distributed compute.
+NVIDIA Cosmos Data Factory (CDF) is a set of agent-driven blueprints and composable skills that turn real data into a large, labeled training dataset for physical AI. These blueprints and skills curate, enrich, label, augment and generate data on your own GPUs on premises or on the cloud of your choice.
 
-This repository is an entry point for currently published PAIDF workflows. It
-contains **agent skills** for running workflows on
-[NVIDIA OSMO](https://developer.nvidia.com/osmo), plus links to the Airflow-based
-DAGs maintained in [NVIDIA/paidf-orchestration](https://github.com/NVIDIA/paidf-orchestration).
+## Reference blueprints
 
-## PAIDF ecosystem
+| Reference blueprint | What it does | Use cases |
+|---|---|---|
+| [**Autonomous Vehicle Dataset Generation**](https://github.com/NVIDIA/cdf-orchestration/blob/main/docs/autonomous-vehicle-dataset-generation/getting-started.md) | Finds driving clips similar to an example video with Cosmos Curator and Cosmos Dataset Search, and optionally generates Cosmos3 variants guided by RGB or world scenario map controls. | Improving autonomous driving with more examples of specific driving scenarios |
+| [**Defect Image Generation**](https://github.com/NVIDIA/cdf-orchestration/blob/main/skills/cdf-defect-image-generation/SKILL.md) | Turns PCB, metal and glass component references into simulated SMT component images, then augments them and adds generated defects. | Training inspection models without enough real defect examples |
+| [**Event Video Generation**](https://github.com/NVIDIA/cdf-orchestration/blob/main/skills/cdf-event-video-generation/SKILL.md) | Turns one seed image into annotated anomaly videos of events such as fires, falling, shoplifting and fighting. | Getting data for rare or new events |
+| [**Image Attribute Augmentation**](https://github.com/NVIDIA/cdf-orchestration/blob/main/skills/cdf-image-attribute-augmentation/SKILL.md) | Generates variations of person object crops with controlled changes in clothing, colors and footwear. | Improving person search and re-identification accuracy |
+| [**Video Data Augmentation**](https://github.com/NVIDIA/cdf-orchestration/blob/main/skills/cdf-video-data-augmentation/SKILL.md) | Transforms existing footage across weather, lighting, and environmental conditions while preserving scene structure, and generates auto-labels. | Creating a dataset with more varied conditions from existing footage for model training. |
 
-PAIDF workflows compose reusable core modules into end-to-end data operations.
+All reference blueprints run as Airflow DAGs through [CDF Orchestration](https://github.com/NVIDIA/cdf-orchestration). Kubernetes is supported for every blueprint; Event Video Generation and Video Data Augmentation also run on an OSMO backend.
 
-### PAIDF workflows
+## Core skills
 
-| Workflow | What it does | Use cases | Execution path |
-|----------|--------------|-----------|----------------|
-| **[Defect Image Generation (DIG)](skills/physical-ai-defect-image-generation/SKILL.md)** | Synthesizes labeled defect and clean images by chaining USD rendering, appearance transfer, and anomaly generation, with optional fine-tuning. | Automated optical inspection for PCBA, metal surfaces, and glass | OSMO agent skill |
-| **[Video Data Augmentation (VDA)](skills/physical-ai-video-data-augmentation/SKILL.md)** | Augments video and generates pseudo-labels using Cosmos-based generation and auto-labeling stages. | Video analytics and event-video training data | OSMO agent skill |
-| **[Image Attribute Augmentation (IAA)](https://github.com/NVIDIA/paidf-orchestration/blob/main/docs/image-attribute-augmentation/getting-started.md)** | Generates controlled variations of clothing, color, footwear, and other visible attributes from person-crop datasets. | Person re-identification and attribute search | Airflow DAG on Kubernetes |
-| **[Event Video Generation (EVG)](https://github.com/NVIDIA/paidf-orchestration/blob/main/docs/event-video-generation/getting-started.md)** | Turns seed images into annotated videos with controlled events such as fire, falling, shoplifting, and fighting. | Safety and surveillance event detection | Airflow DAG on Kubernetes |
+Reference blueprints are built from these core skills, which you can also use on their own.
 
-### PAIDF core modules
+| Core skill | What it provides |
+|---|---|
+| [**AnomalyGen**](https://github.com/NVIDIA/cdf-anomalygen) | Creates realistic defect images from a handful of examples, with masks, for visual inspection. |
+| [**Augmentation**](https://github.com/NVIDIA/cdf-augmentation) | Generates variations of your video, images and text using Cosmos models, for conditions you can't capture. |
+| [**Auto Labeling**](https://github.com/NVIDIA/cdf-auto-labeling) | Turns raw video and images into annotated datasets — detection, tracking, captions and scene understanding. |
+| [**Curation and Retrieval**](https://github.com/NVIDIA/cdf-curation-and-retrieval) | Finds clips and images in a large collection, using Cosmos Curator and Cosmos Dataset Search. |
+| [**Orchestration**](https://github.com/NVIDIA/cdf-orchestration) | Runs reference blueprints on your cluster, deploying the services each one needs and scaling them. |
+| [**Simulation**](https://github.com/NVIDIA/cdf-simulation) | Renders photorealistic, fully labeled images from 3D scenes using Isaac Sim and Omniverse Replicator. |
 
-| Core module | What it provides | Repository |
-|-------------|------------------|------------|
-| **Orchestration** | Airflow-based workflow orchestration on Kubernetes for deploying services and scaling PAIDF data operations. | [NVIDIA/paidf-orchestration](https://github.com/NVIDIA/paidf-orchestration) |
-| **Auto Labeling** | Config-driven enrichment and labeling across super-resolution, detection and tracking, scene understanding, and task-question generation. | [NVIDIA/paidf-auto-labeling](https://github.com/NVIDIA/paidf-auto-labeling) |
-| **Augmentation** | Generative-AI data augmentation for video, image, and text, using backends such as Cosmos Transfer, Cosmos Predict, and image-edit models. | [NVIDIA/paidf-augmentation](https://github.com/NVIDIA/paidf-augmentation) |
-| **AnomalyGen** | Few-shot, diffusion-based generation of photorealistic, mask-aligned anomaly images for industrial visual inspection. | [NVIDIA/paidf-anomalygen](https://github.com/NVIDIA/paidf-anomalygen) |
-| **Simulation** | Isaac Sim and Omniverse Replicator pipelines for generating photorealistic, fully labeled inspection imagery. | [NVIDIA/paidf-simulation](https://github.com/NVIDIA/paidf-simulation) |
-| **Curation and Retrieval** | Cosmos Curator, NVIDIA TAO Data services pipelines for curating and retrieving image and video datasets. | [NVIDIA/paidf-curation-and-retrieval](https://github.com/NVIDIA/paidf-curation-and-retrieval) |
+## Cosmos Evaluator
 
-## Repository layout
+CDF uses [Cosmos Evaluator](https://github.com/NVIDIA/cosmos-evaluator) to validate the synthetic video generated by NVIDIA [Cosmos](https://www.nvidia.com/en-us/ai/cosmos/). Cosmos Evaluator measures physical accuracy and object fidelity to improve data quality and includes reference checks like hallucination, object consistency, attribute verification and physical plausibility.
 
-```text
-skills/        Agent skills (the product). Canonical source.
-docs/          Per-workflow environment guides and setup walkthroughs.
-.claude/ .codex/ .agents/   Agent-tool entry points (symlinked to skills/).
-```
+## Prerequisites
 
-The `.claude/skills`, `.codex/skills`, and `.agents/skills` directories are
-symlinks to `skills/`, so the same canonical skills are discovered automatically
-by each agent runtime.
+**Software and services**
+
+1. A Kubernetes cluster
+2. Object storage for your inputs and outputs
+3. A container registry you can push to
+4. An [NGC API key](https://org.ngc.nvidia.com/account/api-key) and a [Hugging Face read token](https://huggingface.co/settings/tokens)
+
+**Hardware**
+
+GPU requirements vary by reference blueprint. Check [hardware requirements](#hardware-requirements) before you start.
+
+Full prerequisites and the setup walkthrough are in the [Getting Started Guide](https://github.com/NVIDIA/cdf-orchestration/blob/main/docs/getting-started.md).
 
 ## Getting started
 
-Choose the orchestration path that fits your environment:
+This repository is the entry point for CDF as a whole. Run reference blueprints through CDF Orchestration, or use the core skills on their own or in a custom pipeline.
 
-- **[OSMO](https://developer.nvidia.com/osmo)** - provision a GPU runtime
-  environment, pull sample assets, and open [OpenClaw](https://openclaw.ai) or
-  your preferred coding agent to drive the workflow.
-- **Airflow on Kubernetes** - follow the
-  [PAIDF Orchestration getting-started guide](https://github.com/NVIDIA/paidf-orchestration/blob/main/docs/getting-started.md),
-  then launch either DAG (IAA or EVG) from the Airflow UI.
+### Set up CDF Orchestration
 
-OSMO workflow guides:
+Reference blueprints and custom pipelines run on [CDF Orchestration](https://github.com/NVIDIA/cdf-orchestration). Run this prompt in your coding agent:
 
-- **Defect Image Generation** - see
-  [docs/workflows/physical-ai-defect-image-generation/launchable.md](docs/workflows/physical-ai-defect-image-generation/launchable.md)
-- **Video Data Augmentation** - see
-  [docs/workflows/physical-ai-video-data-augmentation/launchable.md](docs/workflows/physical-ai-video-data-augmentation/launchable.md)
+```text
+Clone the CDF Orchestration repository, then run cdf-orchestration-preflight and cdf-orchestration-setup.
+```
 
-To use a skill directly with your own agent, point the agent at the relevant
-`skills/<name>/SKILL.md` and follow its prompts. The skill handles flow
-selection, preconditions, data handoffs, and OSMO submit/monitor commands.
+Preflight audits your environment without changing anything. Setup only runs once preflight passes, so if something is missing you get a list of what to fix. The [Getting Started Guide](https://github.com/NVIDIA/cdf-orchestration/blob/main/docs/getting-started.md) walks through those fixes step by step, including specific cluster, storage and GPU setup.
 
-### Prerequisites
+To set up manually, follow the [Getting Started Guide](https://github.com/NVIDIA/cdf-orchestration/blob/main/docs/getting-started.md).
 
-The OSMO workflows pull gated assets, so you'll generally need:
+### Run a reference blueprint
 
-- **NGC credentials** to pull container images from `nvcr.io`.
-- **A Hugging Face read token** for gated Cosmos, AnomalyGen, and Qwen-Image-Edit
-  models and datasets (accept each model's license first).
-- **OSMO CLI access** with a logged-in profile and an available GPU pool.
+Describe your data and goal to your agent. Example prompts:
 
-The exact secrets, model/dataset links, and resource sizing are listed in each
-workflow's environment guide.
+| Prompt | Reference blueprint |
+|---|---|
+| *"I have a driving scenario to improve my autonomous driving. Curate data, retrieve similar clips, and generate rain variants."* | [Autonomous Vehicle Dataset Generation](https://github.com/NVIDIA/cdf-orchestration/blob/main/skills/cdf-autonomous-vehicle-dataset-generation/SKILL.md) |
+| *"I have PCB component images and want to train a defect detector, but barely any real defect examples."* | [Defect Image Generation](https://github.com/NVIDIA/cdf-orchestration/blob/main/skills/cdf-defect-image-generation/SKILL.md) |
+| *"I have a photo of my warehouse floor and want videos of safety incidents happening in it."* | [Event Video Generation](https://github.com/NVIDIA/cdf-orchestration/blob/main/skills/cdf-event-video-generation/SKILL.md) |
+| *"I have person crops from store cameras and want more variation in clothing and color."* | [Image Attribute Augmentation](https://github.com/NVIDIA/cdf-orchestration/blob/main/skills/cdf-image-attribute-augmentation/SKILL.md) |
+| *"I have dashcam footage and want more variety in weather and lighting to cover edge cases."* | [Video Data Augmentation](https://github.com/NVIDIA/cdf-orchestration/blob/main/skills/cdf-video-data-augmentation/SKILL.md) |
+
+### Use core skills
+
+Each [core skill](#core-skills) can be used individually or orchestrated with others into a custom pipeline. To use one individually, follow the instructions in its repository. To orchestrate several, ask your agent to compose a DAG from them.
+
+For example, to find night-time traffic footage in an archive and generate stalled-vehicle videos from it, the agent combines Curation and Retrieval with Augmentation:
+
+```text
+I want to build a custom blueprint that pulls night-time traffic camera footage from my archive and generates videos of stalled vehicles from it. Walk me through composing that from the core skills.
+```
+
+The agent proposes a DAG that retrieves the matching clips, generates videos from them, evaluates the output and exports labeled results. It then walks you through the payload.
+
+To write a DAG directly, see [`cdf-orchestration-write-dag`](https://github.com/NVIDIA/cdf-orchestration/blob/main/skills/cdf-orchestration-write-dag/SKILL.md). For deployment customization, see [Advanced Usage](https://github.com/NVIDIA/cdf-orchestration/blob/main/docs/advanced-usage.md).
+
+## Hardware requirements
+
+GPU requirements depend on where the models run:
+
+- **External endpoints:** the VLM, LLM and generation models run on endpoints outside your cluster.
+- **Local models:** CDF deploys those models onto your GPUs.
+
+Each reference blueprint links to its capacity details.
+
+| Reference blueprint | GPUs with external endpoints | GPUs with local models |
+|---|---|---|
+| [Autonomous Vehicle Dataset Generation](https://github.com/NVIDIA/cdf-orchestration/blob/main/docs/autonomous-vehicle-dataset-generation/prerequisites.md#check-capacity) | Not supported | **4** |
+| [Defect Image Generation](https://github.com/NVIDIA/cdf-orchestration/blob/main/docs/defect-image-generation/getting-started.md#check-service-access-and-capacity) | Not supported | **4** |
+| [Event Video Generation](https://github.com/NVIDIA/cdf-orchestration/blob/main/docs/getting-started.md#kubernetes-cluster) | **3** | **6** |
+| [Image Attribute Augmentation](https://github.com/NVIDIA/cdf-orchestration/blob/main/docs/getting-started.md#kubernetes-cluster) | **0** | **2** |
+| [Video Data Augmentation](https://github.com/NVIDIA/cdf-orchestration/blob/main/docs/video-data-augmentation/getting-started.md#choose-an-execution-target) | **5** | **8** |
+
+Totals include the Cosmos Evaluator checkers that run by default.
+
+## Fine-tuning assets
+
+Adapt generation models and quality checks to your own data using the following recipes. Each recipe provides its own data preparation, environment setup, training, and evaluation instructions.
+
+| Reference blueprint | Component | What is fine-tuned | When to use it | Resources |
+|---|---|---|---|---|
+| Defect Image Generation | Sim2Real Qwen-Image-Edit | A LoRA adapter for the original Qwen-Image-Edit model. | Adapt simulated SMT component crops to your inspection-camera lighting and surface appearance using aligned source/target image pairs. Evaluate the generated images for geometry and defect preservation. | [Tutorial](https://github.com/NVIDIA/cdf-simulation/blob/main/docs/tutorials/sim2real-qwen-image-edit/README.md) and [Jupyter notebook](https://github.com/NVIDIA/cdf-simulation/blob/main/docs/tutorials/sim2real-qwen-image-edit/fine_tune_smt.ipynb) |
+| Defect Image Generation | AnomalyGen | Defect-specific LoRA adapters for the Cosmos generation model. | Adapt defect generation to your product surfaces and defect types using defect images and masks, then generate defects on clean product images. | [Detailed tutorial](https://github.com/NVIDIA/cdf-anomalygen#tutorial), [Fine-tuning guide](https://github.com/NVIDIA/cdf-anomalygen/blob/main/docs/tutorial/texture/4-fine-tuning.md), [Agent skill](https://github.com/NVIDIA/cdf-anomalygen/blob/main/skills/cdf-anomalygen/SKILL.md) |
+| Event Video Generation, Video Data Augmentation | Cosmos Evaluator: Physical Plausibility Checker | The attention-pooling query and classification head on a frozen video encoder; threshold-only calibration is also available. | Adapt video quality checks to your domain using videos labeled acceptable or reject. Train or fine-tune the checker, calibrate its decision threshold, and evaluate it on held-out videos. | [Jupyter notebook](https://github.com/NVIDIA/cosmos-evaluator/blob/main/docs/tutorials/train_physical_plausibility_checker.ipynb) |
+
+These recipes run separately from blueprint execution. Validate the trained model and configure its deployment before using it in a blueprint.
+
+## Migration
+
+Legacy OSMO skills are snapshotted at tag `paidf-26.10`. See the [migration guide](MIGRATION.md) for what changed.
 
 ## Contributing
 
@@ -90,7 +134,7 @@ This project is currently **not accepting external contributions**. The
 repository is published as-is for reference and reproducibility; issues and
 pull requests from community members will not be reviewed or merged at this
 time. If contributions are reopened, all commits must be signed off per the
-Developer Certificate of Origin - see [CONTRIBUTING.md](CONTRIBUTING.md).
+Developer Certificate of Origin — see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Security
 
