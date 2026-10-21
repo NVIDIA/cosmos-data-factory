@@ -1,10 +1,10 @@
 # How to Contribute
 
-Thanks for your interest in contributing to **Cosmos Data Factory**. We'd love to receive your patches and contributions. Please keep your pull requests as draft until such time that you would like us to review them.
+Thanks for your interest in contributing to **Cosmos Data Factory**. We'd love to receive your patches and contributions. Please keep your merge requests as draft until such time that you would like us to review them.
 
 ## Code Reviews
 
-All submissions, including submissions by project members, require review. We use GitHub pull requests for this purpose. Consult [GitHub's pull request documentation](https://docs.github.com/en/pull-requests) for more information on using pull requests.
+All submissions, including submissions by project members, require review. We use GitLab merge requests for this purpose. Consult the [GitLab Merge Requests documentation](https://docs.gitlab.com/ee/user/project/merge_requests/) for more information on using merge requests.
 
 ## Signing Your Work
 
