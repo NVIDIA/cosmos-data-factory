@@ -7,7 +7,7 @@ SPDX-License-Identifier: CC-BY-4.0 AND Apache-2.0
 
 ## Reporting a Vulnerability
 
-NVIDIA is committed to addressing security issues in this project responsibly. If you believe you have found a security vulnerability in **Physical AI Data Factory** or in any skill published from this repository, please report it to the NVIDIA Product Security Incident Response Team (PSIRT) rather than opening a public issue or pull request.
+NVIDIA is committed to addressing security issues in this project responsibly. If you believe you have found a security vulnerability in **Cosmos Data Factory** or in any skill published from this repository, please report it to the NVIDIA Product Security Incident Response Team (PSIRT) rather than opening a public issue or merge request.
 
 - **Email:** [psirt@nvidia.com](mailto:psirt@nvidia.com)
 - **Web:** [https://www.nvidia.com/en-us/security/](https://www.nvidia.com/en-us/security/)
@@ -26,8 +26,7 @@ PSIRT will acknowledge receipt and coordinate disclosure with the maintainers of
 
 This policy covers:
 
-- The skills published under `skills/` in this repository.
-- The scripts and tooling under `scripts/`, `internal/`, and the workflow assets under `refs/`.
+- The deprecated OSMO-orchestrated skills preserved at tag `paidf-26.10`.
 - Documentation under `docs/` where security-relevant guidance is provided.
 
 It does not cover third-party software, container images, or services referenced by these skills. Vulnerabilities in those should be reported to their respective maintainers; please still notify PSIRT if the issue is exploitable through this project's skills.
