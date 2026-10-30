@@ -105,7 +105,7 @@ Each reference blueprint links to its capacity details.
 | Reference blueprint | GPUs with external endpoints | GPUs with local models |
 |---|---|---|
 | [Autonomous Vehicle Dataset Generation](https://github.com/NVIDIA/cdf-orchestration/blob/main/docs/autonomous-vehicle-dataset-generation/prerequisites.md#check-capacity) | Not supported | **4** |
-| [Defect Image Generation](https://github.com/NVIDIA/cdf-orchestration/blob/main/docs/defect-image-generation/getting-started.md#check-service-access-and-capacity) | Not supported | **4** |
+| [Defect Image Generation](https://github.com/NVIDIA/cdf-orchestration/blob/main/docs/defect-image-generation/getting-started.md#hardware-requirements) | **2** | **4** |
 | [Event Video Generation](https://github.com/NVIDIA/cdf-orchestration/blob/main/docs/getting-started.md#kubernetes-cluster) | **3** | **6** |
 | [Image Attribute Augmentation](https://github.com/NVIDIA/cdf-orchestration/blob/main/docs/getting-started.md#kubernetes-cluster) | **0** | **2** |
 | [Video Data Augmentation](https://github.com/NVIDIA/cdf-orchestration/blob/main/docs/video-data-augmentation/getting-started.md#choose-an-execution-target) | **5** | **8** |
